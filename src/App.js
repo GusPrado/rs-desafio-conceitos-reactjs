@@ -16,11 +16,14 @@ function App() {
     setRepos([...repos, newRepo])
   }
 
-  async function handleRemoveRepository(id) {
+  async function handleRemoveRepository(id) { 
     
-    // const response = await api.delete(id)
+    await api.delete(`repositories/${id}`)
 
-    // setRepos([...repos])
+    const newRepos = repos.filter(repo => !repo.id.includes(id))
+
+    setRepos([...newRepos])
+
   }
 
   const [repos, setRepos] = useState([])
@@ -33,12 +36,12 @@ function App() {
     <div>
       <ul data-testid="repository-list">
         {repos.map(repo => 
-                  <li key={repo.id}>
-                    {repo.title}       
-                    <button onClick={() => handleRemoveRepository(repo.id)}>
-                      Remover
-                    </button>
-                  </li>
+            <li key={repo.id}>
+              {repo.title}       
+              <button onClick={() => handleRemoveRepository(repo.id)}>
+                Remover
+              </button>
+            </li>
         )}
       </ul>
 
